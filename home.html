@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Storage Client</title>
+</head>
+<body>
+
+    <h1>Data Storage Client</h1>
+
+    <form id="dataForm">
+      <label for="imei">IMEI:</label>
+      <select id="IMEI" name="IMEI" required></select><br>
+
+      <label for="timestamp">TIMESTAMP:</label>
+      <input type="text" id="TIMESTAMP" name="TIMESTAMP" required><br>
+
+      <label for="status">STATUS:</label>
+      <input type="text" id="STATUS" name="STATUS" required><br>
+
+      <label for="command">COMMAND:</label>
+      <input type="text" id="COMMAND" name="COMMAND" required><br>
+
+      <label for="result">RESULT:</label>
+      <input type="text" id="RESULT" name="RESULT" required><br>
+
+      <button type="submit">Submit</button>
+    </form>
+    <script src="js/command.js"></script>
+
+</body>
+</html>

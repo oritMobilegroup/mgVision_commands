@@ -1,0 +1,101 @@
+<html>
+<head>
+    <title>Login</title>
+</head>
+<style>
+    body {
+font-family: Arial, sans-serif;
+margin: 20px;
+padding: 20px;
+box-sizing: border-box;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh; /* Set minimum height to cover the whole viewport */
+background: url('https://mgactivities.com:4062/./img/cars.jpg') no-repeat center center fixed;
+background-size: cover;
+color: white;
+
+}
+
+h1 {
+margin-bottom: 40px;
+color: white;
+}
+
+#request-password-form {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 500%;
+max-width:300;
+background-color: rgba(255, 255, 255, 0.8);
+padding: 100px;
+border-radius: 10px;
+height: 10vh; /* Set the form to take the full height */
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for better visibility */
+}
+#login-form {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 500%;
+max-width:300;
+background-color: rgba(255, 255, 255, 0.8);
+padding: 100px;
+border-radius: 10px;
+height: 10vh; /* Set the form to take the full height */
+box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for better visibility */
+}
+
+label {
+margin-bottom: 5px;
+}
+
+/* textarea, */
+
+
+
+
+button {
+align-self: flex-start;
+margin-top: 10px;
+}
+
+</style>
+
+<body>
+    <h2>enter userName</h2>
+    <form id="request-password-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <button type="submit"> Password</button>
+        <button type="button" id="reset-button">Reset</button>
+
+    </form>
+    
+    <div id="response"></div>
+    
+    
+
+
+
+
+    <h2>Login</h2>
+    <form id="login-form">
+        <!-- <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br> -->
+        
+        <label for="specialPassword"> Password:</label>
+        <input type="password" id="specialPassword" name="specialPassword" required><br>
+        
+        <button type="submit">Login</button>
+    </form>
+
+
+    <div id="response"></div>
+    
+    <script src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Data Storage Client</title>
+
+     <style>
+         body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Set minimum height to cover the whole viewport */
+    background: url('https://mgactivities.com:4062/./img/cars.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+h1 {
+    margin-bottom: 40px;
+    color: white;
+}
+
+#dataForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20000%;
+    max-width:1200px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 100px;
+    border-radius: 10px;
+    height: 100vh; /* Set the form to take the full height */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Add a subtle shadow for better visibility */
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+textarea,
+select {
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    width: calc(100% - 16px); /* Adjust width to account for padding */
+}
+
+#RESULT {
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    white-space: pre-line;
+    word-wrap: break-word;
+    resize: vertical;
+}
+
+button {
+    align-self: flex-start;
+    margin-top: 10px;
+}
+
+     </style>
+<body>
+
+     <h1>Data Storage Client</h1>
+
+     <form id="dataForm">
+
+          <button type="submit"id="submit">Submit</button>
+          
+      <button type="button" id="reset-button">Reset</button>
+      <div id="status"></div>
+
+
+       <label for="imei">IMEI:</label>
+       <select id="IMEI" name="IMEI" required></select><br>
+
+       <label for="COMMAND">COMMAND:</label>
+       <textarea id="COMMAND" name="COMMAND" rows="4" required></textarea><br>
+
+       <label for="RESULT">RESULT:</label>
+       <textarea id="RESULT" name="RESULT" rows="4" ></textarea><br>
+
+
+     </form>
+
+     <!-- <script src="https://mgactivities.com:4062/command_fullstack/js/command.js"></script> -->
+     <script src="https://mgactivities.com:4062/js/command.js"></script>
+
+</body>
+</html>
