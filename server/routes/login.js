@@ -23,9 +23,9 @@ console.log("i start work")
 
     // Generate a new special password
     const newPassword = crypto.randomBytes(8).toString('hex');
-
-    // Update the special password field in the database
     user.specialPassword = newPassword;
+    user.specialPasswordTimestamp = new Date();
+
     await user.save();
 
     const email = user.email;
@@ -53,11 +53,17 @@ router.post('/login', async (req, res) => {
   
       // Compare the entered password with the stored password
       if (specialPassword === user.specialPassword) {
+        const fiveMinutesAgo = new Date();
+        fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
         // Passwords match, redirect to the INDEX page
         // res.redirect(".../client/index");
-        console.log(specialPassword);
-        res.status(200).json({ msg:' password'});
-        // You should replace '/index' with the actual route of your INDEX page
+        if (user.specialPasswordTimestamp > fiveMinutesAgo) {
+          // Passwords match, redirect to the INDEX page
+          console.log(specialPassword);
+          res.status(200).json({ msg: 'password' });
+        } else {
+          res.status(401).json({ error: 'Expired password' });
+        }
       } else {
         res.status(401).json({ error: 'Incorrect password' });
       }
@@ -65,6 +71,7 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
+      
 
   
 

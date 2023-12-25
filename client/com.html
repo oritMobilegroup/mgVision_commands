@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command Executor</title>
+</head>
+<body>
+    <h1>Command Executor</h1>
+    <label for="imei">IMEI:</label>
+    <input type="text" id="imei" name="imei">
+    <br>
+    <label for="command">Command:</label>
+    <input type="text" id="command" name="command">
+    <br> 
+    <button onclick="executeCommand()">Execute Command</button>
+    <p id="result"></p>
+
+    <script>
+        function executeCommand() {
+            const imei = document.getElementById('imei').value;
+            const command = document.getElementById('command').value;
+
+            fetch("http://mgactivities.com:5001/send-command", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    imei: imei,
+                    command: command,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the result
+                document.getElementById('result').innerText = data.result;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -3,39 +3,44 @@ const express = require('express');
 const router = express.Router();
 const JsonData = require('../models/jsonSchema');
 
-router.post('/update-json', async (req, res) => {
+
+  router.get('/json', async (req, res) => {
     try {
-      const updatedJSON = req.body;
-  
-      // Save the updated JSON to the database
-      await JsonData.updateOne({}, { jsonData: updatedJSON }, { upsert: true });
-  
-      res.json({ message: 'JSON updated and saved successfully' });
+      const jsonData = await JsonData.findOne({});
+      console.log(jsonData)
+      if (!jsonData) {
+        return res.json({}); // Return empty object if no data exists
+      }
+      return res.json(jsonData);
     } catch (error) {
-      console.error('Error updating and saving JSON:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error('Error fetching JSON:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
     }
   });
-
-  router.get('/', (req, res) => {
-    res.sendFile(__dirname + '../.././json.html');
-    console.log('../.././json.html')
-  });
-  router.get('/get-json', async (req, res) => {
-    try {
-      // Assuming you have a single document in your collection
-      const jsonDocument = await JsonData.findOne();
   
-      if (!jsonDocument) {
-        return res.status(404).json({ message: 'JSON document not found in the database' });
+  router.put('/json', async (req, res) => {
+    try {
+      const updatedData = req.body;
+  
+      // Retrieve the existing JSON data
+      let existingData = await JsonData.findOne({});
+  
+      if (!existingData) {
+        // If no existing data, create a new entry
+        existingData = await JsonData.create(updatedData );
+      } else {
+        // Update the existing JSON data
+        existingData.jsonData = updatedData;
+        await existingData.save();
       }
   
-      res.json(jsonDocument);
+      return res.json( updatedData );
     } catch (error) {
-      console.error('Error fetching JSON from the database:', error);
-      res.status(500).json({ message: 'Internal Server Error' });
+      console.error('Error updating JSON:', error);
+      return res.status(500).json({ message: 'Internal Server Error' });
     }
   });
-  // Handle POST request to update JSON
+ 
+
  
 module.exports = router;

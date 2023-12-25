@@ -4,23 +4,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     const resetButton = document.getElementById('reset-button');
   const status = document.getElementById('status');
   
-
-  // Check if the page is loaded from the authorized page
-  const allowedReferrer = "https://mgactivities.com:4062/login.html";
+  const allowedReferrer = "http://mgactivities.com:4062/login.html";
   const referringPage = document.referrer;
 
   if (referringPage !== allowedReferrer) {
     alert("Blocked!!");
     // Redirect to the login page or handle unauthorized access
-    window.location.href = "https://mgactivities.com:4062/login.html";
+    window.location.href = "http://mgactivities.com:4062/login.html";
     return;
   }
+
+  // Check if the page is loaded from the authorized page
 
     // Retrieve the list of IMEIs from the server
     //https://mgactivities.com:4062/
     //http://34.241.178.69:4062
     try {
-      const response = await fetch('https://mgactivities.com:4062/api/imeis');
+      const response = await fetch('http://mgactivities.com:4062/api/imeis');
   
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.error('Error retrieving IMEIs:', error.message);
     }
   
-    // Add form submission logic
     document.getElementById('dataForm').addEventListener('submit', async function (event) {
       event.preventDefault();
       document.getElementById('submit').disabled = true;
@@ -50,9 +49,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       formData.forEach((value, key) => {
         data[key.toUpperCase()] = value;
       });
-  
+      // http://mgactivities.com:5001/send-command
       try {
-        const response = await fetch('https://mgactivities.com:4062/api/store', {
+        const response = await fetch('http://mgactivities.com:4062/api/store', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -106,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const imeiInput = document.getElementById('IMEI');
         const imei = imeiInput.value;
     
-        const response = await fetch('https://mgactivities.com:4062/api/restart', {
+        const response = await fetch('http://mgactivities.com:4062/api/restart', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -143,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             clearInterval(pollingInterval); // Stop the interval
             return;
           }
-          const response = await fetch('https://mgactivities.com:4062/api/retrieve-result', {
+          const response = await fetch('http://mgactivities.com:4062/api/retrieve-result', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -202,4 +201,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
   });
+  function executeCommand() {
+    const imei = document.getElementById('IMEI').value;
+    const command = document.getElementById('COMMAND').value;
+
+    fetch("http://mgactivities.com:5001/send-command", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            imei: imei,
+            command: command,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Display the result
+        document.getElementById('RESULT').innerText = data.result;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
   

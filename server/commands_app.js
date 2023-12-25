@@ -32,20 +32,20 @@ const jsonRoute = require('./routes/jsonRoute');
 
 app.use('/api', apiRoutes);
 app.use('/login', loginRoutes);
-// app.use('/jsonRoute', jsonRoute);
+app.use('/jsonRoute', jsonRoute);
 
 
 
-var httpsServer = https.createServer({
-    key: key,
-    cert: cert,
-    ca: ca
-  },app);
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
-  httpsServer.listen(port, () => {
+// var httpsServer = https.createServer({
+//     key: key,
+//     cert: cert,
+//     ca: ca
+//   },app);
+ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-})
+});
+
+//   httpsServer.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// })
 

@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   requestForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const username = requestForm.username.value.toLowerCase();
+    const username = requestForm.username.value.toLowerCase()
 
     try {
-      const response = await fetch(`https://mgactivities.com:4062/login/${username}`, {
+      const response = await fetch(`http://mgactivities.com:4062/login/${username}`, {
         method: 'GET',
       });
       
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const username = requestForm.username.value.trim().toLowerCase();
 
     try {
-      const response = await fetch(`https://mgactivities.com:4062/login/login`, {
+      const response = await fetch(`http://mgactivities.com:4062/login/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

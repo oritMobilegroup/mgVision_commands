@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Data Storage Client</title>
-
-     <style>
-         body {
+body {
     font-family: Arial, sans-serif;
     margin: 20px;
     padding: 20px;
@@ -62,39 +54,3 @@ button {
     align-self: flex-start;
     margin-top: 10px;
 }
-
-     </style>
-<body>
-
-     <h1>Data Storage Client</h1>
-
-     <form id="dataForm">
-
-               <button onclick="executeCommand()">Execute Command</button>
-
-      <button type="button" id="reset-button">Reset</button>
-      <div id="status"></div>
-
-       <!-- <label for="imei">IMEI:</label>
-       <select id="IMEI" name="IMEI" required></select><br> -->
-       <label for="imei">IMEI:</label>
-       <textarea id="IMEI" name="IMEI" rows="4" required></textarea><br>
-
-       <label for="COMMAND">COMMAND:</label>
-       <textarea id="COMMAND" name="COMMAND" rows="4" required></textarea><br>
-   
-   
-
-
-
-       <label for="RESULT">RESULT:</label>
-       <textarea id="RESULT" name="RESULT" rows="4" ></textarea><br>
-
-
-     </form>
-
-     <!-- <script src="https://mgactivities.com:4062/command_fullstack/js/command.js"></script> -->
-     <script src="http://mgactivities.com:4062/js/command.js"></script>
-
-</body>
-</html>
