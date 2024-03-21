@@ -1,0 +1,17 @@
+{
+    "imei123456789012345": {
+      "rowIdTracker": 50,
+      "rowIdTracker_ACC_ON": 10,
+      "rowIdTracker_ACC_OFF": 15,
+      "rowIdTracker_Shock": 5,
+      "rowIdTracker_Power_Cut": 3
+    },
+    "imei543210987654321": {
+      "rowIdTracker": 45,
+      "rowIdTracker_ACC_ON": 12,
+      "rowIdTracker_ACC_OFF": 14,
+      "rowIdTracker_Shock": 7,
+      "rowIdTracker_Power_Cut": 4
+    }
+  }
+  

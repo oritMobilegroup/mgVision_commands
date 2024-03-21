@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="<%= localizing %>">
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset="utf-8" />
+    <title>CarLocation</title>
+    <style>
+        html, body, #map {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #map {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        var side = "<%= localizing %>" === "iw" ? "rtl" : "ltr";
+        var locations = <%= JSON.stringify(locations) %>;
+        var mapDetails = {
+            speed: "<%= speed %>",
+            kmph: "<%= kmph %>",
+            addressFirst: "<%= addressFirst %>",
+            addressLast: "<%= addressLast %>",
+            startLocation: "<%= startLocation %>",
+            endLocation: "<%= endLocation %>",
+            time: "<%= time %>",
+            azimuth: "<%= azimuth %>"
+        };
+
+        function attachSecretMessage(marker, secretMessage) {
+            var infowindow = new google.maps.InfoWindow({ content: secretMessage });
+            marker.addListener('click', function() {
+                infowindow.open(marker.get('map'), marker);
+            });
+        }
+
+        function initMap() {
+            const mapCenter = locations.length > 0 ?
+                { lat: locations[locations.length - 1].latitude, lng: locations[locations.length - 1].longitude } :
+                { lat: 0, lng: 0 };
+
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center: mapCenter,
+                mapTypeControl: true,
+                zoomControl: true,
+                scaleControl: true,
+                streetViewControl: false,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+                },
+            });
+
+            // Example: Adding a marker at the map center
+            const marker = new google.maps.Marker({
+                position: mapCenter,
+                map: map,
+                title: 'Center Location',
+            });
+
+            // Assuming 'locations' contains {latitude, longitude, ...} objects
+            locations.forEach((location, index) => {
+                const loc = { lat: location.latitude, lng: location.longitude };
+                const isStart = index === 0;
+                const isEnd = index === locations.length - 1;
+                const markerIcon = isStart ? 'start.png' : isEnd ? 'end.png' : 'default.png'; // Adjust paths as necessary
+                
+                const marker = new google.maps.Marker({
+                    position: loc,
+                    map: map,
+                    icon: markerIcon,
+                    title: isStart ? mapDetails.startLocation : isEnd ? mapDetails.endLocation : `Location ${index + 1}`,
+                });
+
+                let message = isStart ? mapDetails.startLocation : isEnd ? mapDetails.endLocation : `Location ${index + 1}`;
+                message += `<br>Speed: ${location.speed} ${mapDetails.kmph}<br>Time: ${location.time}`;
+                attachSecretMessage(marker, message);
+            });
+        }
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+</body>
+</html>

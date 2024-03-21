@@ -1,0 +1,11 @@
+
+
+
+
+var request = {
+    "ip": "sock.remoteAddress",
+    port: sock.remotePort,
+    date: functions.getDate(),
+    time: functions.getCurrentTime(),
+    timestamp: Date.now(),
+  };

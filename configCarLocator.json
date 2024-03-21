@@ -1,0 +1,9 @@
+{
+  "versionControl" : [
+    {
+      "versionName" : "1.1",
+      "versionImeis" : [ "all" ],
+      "versionURL" : "http://fota.colmobil.co.il.s3-eu-west-1.amazonaws.com/FOTA/CL/CarLocator_1.1.apk"
+    }
+  ]
+}
