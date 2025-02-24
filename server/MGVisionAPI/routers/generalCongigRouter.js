@@ -178,7 +178,7 @@ const router = express.Router();
 
 const getGeneralConfigModel = require('../models/generalConfig'); // MGVisionAPI Model
 const getMGServiceConfigModel = require('../../Telematics/models/mgServiceConfig'); // Telematics Model
-const diffGeneral = require('../models/DiffGeneral'); // Change tracking model
+const getDiffGeneralModel = require('../models/DiffGeneral'); // Now properly initialized for MGVisionAPI
 
 const { verifyToken } = require('../token');
 
@@ -228,6 +228,7 @@ router.post('/update_general_config', verifyToken, async (req, res) => {
         // Initialize models
         const MGServiceConfig = await getMGServiceConfigModel();
         const GeneralConfig = await getGeneralConfigModel();
+        const DiffGeneral = await getDiffGeneralModel(); // Get the correct model for change tracking
 
         if (!MGServiceConfig || !GeneralConfig) {
             return res.status(500).json({ error: 'Database models are not initialized.' });
@@ -282,7 +283,7 @@ router.post('/update_general_config', verifyToken, async (req, res) => {
         const changesGeneral = getDifferences(oldDataGeneral, newDataGeneral);
 
         if (Object.keys(changesMGService).length > 0 || Object.keys(changesGeneral).length > 0) {
-            await diffGeneral.create({
+            await DiffGeneral.create({
                 IMEI,
                 OldData: { MGServiceConfig: oldDataMGService, GeneralConfig: oldDataGeneral },
                 NewData: { MGServiceConfig: newDataMGService, GeneralConfig: newDataGeneral },
