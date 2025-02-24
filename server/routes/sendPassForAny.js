@@ -11,38 +11,38 @@ const {saveData}=require("../models/savedata");
 const tempPasswords = {};
 
 
-router.get('/:username', async (req, res) => {
-  const username = req.params.username;
-console.log("i start work")
-  try {
-    // Find the user by username
-    const user = await User.findOne({ username });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+router.get('/:usernameForAny', async (req, res) => {
+    const usernameForAny = req.params.usernameForAny;
+    console.log("any");
+    try {
+      // Find the user by username
+      const user = await User.findOne({ username: usernameForAny });
+      console.log(user);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Generate a new special password
+      const newPassword = crypto.randomBytes(5).toString('hex');
+      user.specialPassword = newPassword;
+      user.specialPasswordTimestamp = new Date();
+  
+      await user.save();
+  
+      const email = user.email;
+      console.log(newPassword);
+      // Send the new special password to the user
+      sendPasswordEmail(email, newPassword); // Call the sendPasswordEmail function
+  
+      res.status(200).json({ message: 'Password sent to the user' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-
-    // Generate a new special password
-    const newPassword = crypto.randomBytes(8).toString('hex');
-    user.specialPassword = newPassword;
-    user.specialPasswordTimestamp = new Date();
-
-    await user.save();
-
-    const email = user.email;
-console.log(username)
-    // Send the new special password to the user
-    sendPasswordEmail(email, newPassword); // Call the sendPasswordEmail function
-
-    res.status(200).json({ message: 'password sent to the user' });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+  });
 
 // Add a route to check the password and redirect to INDEX page
-router.post('/login', async (req, res) => {
+router.post('/any', async (req, res) => {
     const { username, specialPassword } = req.body;
-  
     try {
       // Find the user by username
       const user = await User.findOne({ username });
@@ -55,10 +55,9 @@ router.post('/login', async (req, res) => {
       if (specialPassword === user.specialPassword) {
         const fiveMinutesAgo = new Date();
         fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
-        // Passwords match, redirect to the INDEX page
-        // res.redirect(".../client/index");
+  
         if (user.specialPasswordTimestamp > fiveMinutesAgo) {
-          // Passwords match, redirect to the INDEX page
+          // Passwords match, log and respond
           console.log(specialPassword);
           res.status(200).json({ msg: 'password' });
         } else {
@@ -71,7 +70,6 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   });
-      
 
   
 
